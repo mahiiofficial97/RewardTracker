@@ -1,7 +1,9 @@
 package com.rewardtracker.service;
 
 import com.rewardtracker.model.Customer;
+import com.rewardtracker.model.JsonResponseClass;
 import com.rewardtracker.repository.CustomerRepo;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,6 @@ public class CustomerService {
         return customer;
     }
 
-
     public Optional<Customer> updateCustomer(Long id, Customer customerDetails) {
         return customerRepo.findById(id).map(customer -> {
             customer.setName(customerDetails.getName());
@@ -64,4 +65,51 @@ public class CustomerService {
         }).orElse(false);
     }
 
+    public JsonResponseClass loginUser(Customer customer, HttpSession session) {
+    	JsonResponseClass response = new JsonResponseClass();
+
+        if (session.getAttribute("userInstance") != null) {
+            response.setMessage("You are already logged in!");
+            response.setResult("success");
+            response.setStatus("200");
+            return response;
+        }
+
+        Customer existingCustomer = customerRepo.findByEmail(customer.getEmail());
+        if (existingCustomer != null) {
+            if (customer.getPassword().equals(existingCustomer.getPassword())) { // Plain text password comparison
+                session.setAttribute("userInstance", existingCustomer);
+                response.setMessage("Login successful!");
+                response.setResult("success");
+                response.setStatus("200");
+            } else {
+                response.setMessage("Invalid credentials! Incorrect password.");
+                response.setResult("failure");
+                response.setStatus("401");
+            }
+        } else {
+            response.setMessage("No account found with this email.");
+            response.setResult("unsuccessful");
+            response.setStatus("404");
+        }
+
+        return response;
+    }
+
+    public JsonResponseClass logoutUser(HttpSession session) {
+    	JsonResponseClass response = new JsonResponseClass();
+
+        if (session.getAttribute("userInstance") == null) {
+            response.setMessage("You are already logged out!");
+            response.setResult("success");
+            response.setStatus("200");
+        } else {
+            session.invalidate();
+            response.setMessage("Logout successful!");
+            response.setResult("success");
+            response.setStatus("200");
+        }
+
+        return response;
+    }
 }

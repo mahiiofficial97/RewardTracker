@@ -4,6 +4,9 @@ package com.rewardtracker.controller;
 import com.rewardtracker.model.Customer;
 import com.rewardtracker.model.JsonResponseClass;
 import com.rewardtracker.service.CustomerService;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -77,5 +80,16 @@ public class CustomerController {
         } else {
             return new JsonResponseClass("404", "Customer not found", "failure");
         }
+    }
+    
+    
+    @PostMapping("/login")
+    public JsonResponseClass loginUser(@RequestBody Customer customer, HttpSession session) {
+        return customerService.loginUser(customer, session);
+    }
+
+    @PostMapping("/logout")
+    public JsonResponseClass logoutUser(HttpSession session) {
+        return customerService.logoutUser(session);
     }
 }
