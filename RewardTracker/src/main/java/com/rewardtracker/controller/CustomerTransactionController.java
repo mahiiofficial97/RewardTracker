@@ -1,5 +1,6 @@
 package com.rewardtracker.controller;
 
+import com.rewardtracker.globalExceptionhandling.ResourceNotFoundException;
 import com.rewardtracker.model.CustomerTransaction;
 import com.rewardtracker.service.CustomerTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,16 @@ public class CustomerTransactionController {
         List<CustomerTransaction> transactions = transactionService.getAllTransactions();
         return ResponseEntity.ok(transactions);
     }
-
+//glo exception
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<List<CustomerTransaction>> getTransactionsByCustomerId(@PathVariable Long customerId) {
         List<CustomerTransaction> transactions = transactionService.getTransactionsByCustomerId(customerId);
+        if (transactions.isEmpty()) {
+            // Throw a ResourceNotFoundException if no transactions found
+            throw new ResourceNotFoundException("No transactions found for customer with ID " + customerId);
+        }
         return ResponseEntity.ok(transactions);
     }
-
   
 
     @PutMapping("/{id}")
