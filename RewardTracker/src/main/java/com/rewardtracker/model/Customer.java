@@ -28,5 +28,5 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<RewardPoints> rewardPoints; // Ensure this field exists
+    private List<RewardPoints> rewardPoints; //this dfeild for use of the dele
 }

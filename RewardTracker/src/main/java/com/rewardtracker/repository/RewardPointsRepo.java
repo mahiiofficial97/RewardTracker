@@ -9,11 +9,11 @@ import java.util.List;
 @Repository
 public interface RewardPointsRepo extends JpaRepository<RewardPoints, Long> {
 
-    // ✅ Find all reward points for a customer
+    //  Find all reward points for a customer
     List<RewardPoints> findByCustomerId(Long customerId);
     void deleteByCustomerId(Long customerId);
 
 
-    // ✅ Find reward points for a specific customer, month, and year
+    // Find reward points for a specific customer, month, and year
     RewardPoints findByCustomerIdAndRewardMonthAndRewardYear(Long customerId, int rewardMonth, int rewardYear);
 }

@@ -57,10 +57,10 @@ public class CustomerService {
     public boolean deleteCustomer(Long id) {
         return customerRepo.findById(id).map(customer -> {
             // Remove related customer transactions first
-            customer.getSpentDetails().clear();  // ✅ Clears the list in JPA
-            customerRepo.save(customer);  // ✅ Update to reflect the change
+            customer.getSpentDetails().clear();  //  Clears the list in JPA
+            customerRepo.save(customer);  // Update to reflect the change
 
-            customerRepo.delete(customer);  // ✅ Now delete the customer
+            customerRepo.delete(customer);  //  Now delete the customer
             return true;
         }).orElse(false);
     }

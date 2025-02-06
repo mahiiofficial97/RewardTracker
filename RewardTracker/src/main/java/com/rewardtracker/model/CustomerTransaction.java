@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Getter
 @Setter
 @Entity
-@ToString(exclude = "customer")  // ✅ Prevent recursion in toString()
+@ToString(exclude = "customer")  //  Prevent recursion in toString()
 public class CustomerTransaction {
 
     @Id
@@ -25,7 +25,7 @@ public class CustomerTransaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
-    @JsonBackReference  // ✅ Prevent infinite recursion in JSON
+    @JsonBackReference  //  Prevent infinite recursion in JSON
     private Customer customer;
 
     private String spentDetails;

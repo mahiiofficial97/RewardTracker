@@ -7,7 +7,6 @@ public class JsonResponseClass {
 	
 	public JsonResponseClass() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public JsonResponseClass(String status, String result, String message) {
 		super();

@@ -11,7 +11,7 @@ public class SwaggerConfig {
     public GroupedOpenApi rewardApi() {
         return GroupedOpenApi.builder()
                 .group("reward-api")
-                .packagesToScan("com.rewardtracker") // Adjust package name as per your project structure
+                .packagesToScan("com.rewardtracker") // Adjusting here the package name as my project 
                 .build();
     }
 }
