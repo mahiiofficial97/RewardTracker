@@ -39,6 +39,7 @@ public class CustomerTransactionController {
             // Throw a ResourceNotFoundException if no transactions found
             throw new ResourceNotFoundException("No transactions found for customer with ID " + customerId);
         }
+        
         return ResponseEntity.ok(transactions);
     }
   
@@ -50,8 +51,9 @@ public class CustomerTransactionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTransaction(@PathVariable Long id) {
+    public ResponseEntity<String> deleteTransaction(@PathVariable Long id) {
         transactionService.deleteTransaction(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Transaction deleted successfully!");
     }
+
 }
